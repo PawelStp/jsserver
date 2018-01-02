@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="bookCtrl.js"></script>
+</head>
+
+<body ng-app="myBook" ng-controller="myBookCtrl">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="btn btn-success" ng-click="ClickAuthors()">Authors</button>
+                <button class="btn btn-success" ng-click="ClickBooks()">Books</button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <!-- Books -->
+    <div class="container" ng-init="Books=1" ng-show="Books">
+        <div class="text-center">
+
+            <h1>Books</h1>
+            <button class="btn btn-success">Add new</button>
+        </div>
+        <p></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author Name</th>
+                    <th>Author Surname</th>
+                    <th>Year</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="book in books">
+                    <td>{{book.Title}}</td>
+                    <td>{{book.Author.Name}}</td>
+                    <td>{{book.Author.Surname}}</td>
+                    <td>{{book.Year}}</td>
+                    <td>{{book.Price}}</td>
+                    <td>
+                        <button class="btn-danger">Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Autorzy -->
+    <div class="container" ng-init="Authors=0" ng-show="Authors">
+        <div class="text-center">
+
+            <h1>Authors</h1>
+            <button class="btn btn-success">Add new</button>
+        </div>
+
+        <p></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Author Name</th>
+                    <th>Author Surname</th>
+                    <th>Year Birth</th>
+                    <th>Country</th>
+                    <th>Type of books</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="author in authors">
+                    <td>{{author.Name}}</td>
+                    <td>{{author.Surname}}</td>
+                    <td>{{author.Year}}</td>
+                    <td>{{author.Country}}</td>
+                    <td>{{author.Type}}</td>
+                    <td>
+                        <button class="btn-danger" ng-click=getBooksByAuthorId(author.Id)>Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
