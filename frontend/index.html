@@ -55,7 +55,7 @@
                         <input class="form-control" ng-model="newBook.Title"> </input>
                     </td>
                     <td>
-                        <input class="form-control" ng-model="newBook.Author.Name"></input>
+                        <input class="form-control" ng-model="newBook.Author.Name" readonly></input>
                     </td>
                     <td>
                         <select class="form-control" ng-model="newBook.Author" ng-options="x.Surname for x in authors">
@@ -76,7 +76,7 @@
                         <input class="form-control" ng-model="editedBook.Title"> </input>
                     </td>
                     <td>
-                        <input class="form-control" ng-model="editedBook.Author.Name"></input>
+                        <input class="form-control" ng-model="editedBook.Author.Name" ></input>
                     </td>
                     <td>
                         <select class="form-control" ng-model="editedBook.Author" ng-options="x.Surname for x in authors">
@@ -131,7 +131,7 @@
                         <input class="form-control" ng-model="newAuthor.Name"> </input>
                     </td>
                     <td>
-                        <input class="form-control" ng-model="newAuthor.Surname"> </input>
+                        <input class="form-control" ng-model="newAuthor.Surname"></input>
                     </td>
                     <td>
                         <input class="form-control" ng-model="newAuthor.Year"> </input>

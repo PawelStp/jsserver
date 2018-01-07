@@ -48,6 +48,8 @@ app.get('/books/:authorId', function (req, res) {
 
 app.post('/book', function (req, res) {
     var book = req.body;
+    book.Id = books[books.length - 1].Id + 1;
+    console.log(book);
     books.push(book);
     res.send(200);
 });
