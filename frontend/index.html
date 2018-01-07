@@ -35,7 +35,7 @@
         <div class="text-center">
 
             <h1>Books</h1>
-            <button class="btn btn-success">Add new</button>
+            <button class="btn btn-success" ng-click="showAddFormBook()">Add new</button>
         </div>
         <p></p>
         <table class="table">
@@ -50,14 +50,57 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="book in books">
+                <tr ng-show="addmodeBook" class="form-group">
+                    <td>
+                        <input class="form-control" ng-model="newBook.Title"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newBook.Author.Name"></input>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="newBook.Author" ng-options="x.Surname for x in authors">
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newBook.Year"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newBook.Price"> </input>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" type="submit" ng-click="addNewBook(newBook)">OK </button>
+                    </td>
+                </tr>
+                <tr ng-show="editomodeBook" class="form-group">
+                    <td>
+                        <input class="form-control" ng-model="editedBook.Title"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedBook.Author.Name"></input>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="editedBook.Author" ng-options="x.Surname for x in authors">
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedBook.Year"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedBook.Price"> </input>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" type="submit" ng-click="submitEditBook(newBook)">OK </button>
+                    </td>
+                </tr>
+                <tr ng-repeat="book in books" ng-if="editedBook.Id!=book.Id">
                     <td>{{book.Title}}</td>
                     <td>{{book.Author.Name}}</td>
                     <td>{{book.Author.Surname}}</td>
                     <td>{{book.Year}}</td>
                     <td>{{book.Price}}</td>
                     <td>
-                        <button class="btn-danger">Details</button>
+                        <button ng-show="!addmodeBook" class="btn-warning" ng-click="editBook(book)">Edit</button>
+                        <button ng-show="!editomodeBook && !addmodeBook" class="btn-danger" ng-click="removeBook(book.Id)">Remove</button>
                     </td>
                 </tr>
             </tbody>
@@ -68,7 +111,7 @@
         <div class="text-center">
 
             <h1>Authors</h1>
-            <button class="btn btn-success">Add new</button>
+            <button class="btn btn-success" ng-click="showAddFormAuthor()">Add new</button>
         </div>
 
         <p></p>
@@ -83,14 +126,57 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="author in authors">
+                <tr ng-show="addmodeAuthor" class="form-group">
+                    <td>
+                        <input class="form-control" ng-model="newAuthor.Name"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newAuthor.Surname"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newAuthor.Year"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newAuthor.Country"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="newAuthor.Type"> </input>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" type="submit" ng-click="addNewAuthor(newAuthor)">OK </button>
+                    </td>
+                </tr>
+                <tr ng-show="editmodeAuthor" class="form-group">
+                    <td>
+                        <input class="form-control" ng-model="editedAuthor.Name"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedAuthor.Surname"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedAuthor.Year"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedAuthor.Country"> </input>
+                    </td>
+                    <td>
+                        <input class="form-control" ng-model="editedAuthor.Type"> </input>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" type="submit" ng-click="submitEditAuthor()">OK </button>
+                    </td>
+
+                </tr>
+                <tr ng-repeat="author in authors" ng-if="author.Id != editedAuthor.Id">
                     <td>{{author.Name}}</td>
                     <td>{{author.Surname}}</td>
                     <td>{{author.Year}}</td>
                     <td>{{author.Country}}</td>
                     <td>{{author.Type}}</td>
                     <td>
-                        <button class="btn-danger" ng-click=getBooksByAuthorId(author.Id)>Details</button>
+                        <button ng-show="!editmodeAuthor && !addmodeAuthor" class="btn btn-primary" ng-click=getBooksByAuthorId(author.Id)>Books</button>
+                        <button ng-show="!addmodeAuthor" class="btn btn-warning" ng-click=editAuthor(author.Id)>Edit</button>
+                        <button ng-show="!editmodeAuthor && !addmodeAuthor" class="btn btn-danger" ng-click=removeAuthor(author.Id)>Remove</button>
                     </td>
                 </tr>
             </tbody>

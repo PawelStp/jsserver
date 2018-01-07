@@ -4,7 +4,7 @@ var port = +process.argv[2];
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
@@ -23,45 +23,89 @@ app.use(function(req, res, next) {
     next();
 });
 // GETY
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("Serwer uruchomiony");
 });
 
-app.get('/authors', function(req, res) {
+app.get('/authors', function (req, res) {
     res.send(authors);
 });
 
-app.get('/authors/:bookId', function(req, res) {
+app.get('/authors/:bookId', function (req, res) {
     res.send(getAuthorsByBook(req.params.bookId));
 });
 
 
-app.get('/books', function(req, res) {
+app.get('/books', function (req, res) {
     res.send(books);
 });
 
-app.get('/books/:authorId', function(req, res) {
+app.get('/books/:authorId', function (req, res) {
 
     res.send(getBooksByAuthor(req.params.authorId));
 });
 //POSTY
 
-app.post('/book', function(req, res) {
-    var bookDtO = req.body;
-    var bookk = new book(bookDtO.Id, bookDtO.Title, bookDtO.AuthorId, bookDtO.Year, bookDtO.Price);
-    books.push(bookk);
-    res.redirect("/books");
+app.post('/book', function (req, res) {
+    var book = req.body;
+    books.push(book);
+    res.send(200);
 });
 
-app.post('/author', function(req, res) {
+app.post('/author', function (req, res) {
     var author = req.body;
-    author.Id = author.length;
+    author.Id = authors[authors.length - 1].Id + 1;
     authors.push(author);
-    res.redirect("/books");
+    res.send(200);
 });
 
+// Puty
+app.put('/author', function (req, res) {
+    var editedAuthor = req.body;
+    var author = getAuthorById(editedAuthor.Id);
+    author.Name = editedAuthor.Name;
+    author.Surname = editedAuthor.Surname;
+    author.Country = editedAuthor.Country;
+    author.Year = editedAuthor.Year;
+    author.Type = editedAuthor.Type;
+    // authors.push(author);
+    res.send(200);
+});
+app.put('/book', function (req, res) {
+    var editedBook = req.body;
+    var book = getBookrById(editedBook.Id);
+    book.Author = editedBook.Author;
+    book.Title = editedBook.Title;
+    book.Year = editedBook.Year;
+    book.Price = editedBook.Price;
+    res.send(200);
+});
 
-var getBooksByAuthor = function(id) {
+//Delety
+
+app.delete('/author/:authorId', function (req, res) {
+    var author = getAuthorById(req.params.authorId);
+    var index = authors.indexOf(author);
+    removeBooksByAuthorId(author);
+    authors.splice(index, 1);
+    res.send(200);
+});
+app.delete('/book/:bookId', function (req, res) {
+    var book = getBookrById(req.params.bookId);
+    var index = books.indexOf(book);
+    books.splice(index, 1);
+    res.send(200);
+});
+
+var removeBooksByAuthorId = function (author) {
+    var filteredBooks = getBooksByAuthor(author.Id);
+    for (var i = 0; i < filteredBooks.length; i++) {
+        var index = books.indexOf(filteredBooks[i]);
+        books.splice(index, 1);
+    }
+}
+
+var getBooksByAuthor = function (id) {
     var filteredBooks = [];
     for (var i = 0; i < books.length; i++) {
         if (books[i].Author.Id == id) {
@@ -71,7 +115,14 @@ var getBooksByAuthor = function(id) {
     return filteredBooks;
 };
 
-var getAuthorsByBook = function(id) {
+var getIndexAuthor = function (author) {
+    for (var i = 0; i < authors.length; i++) {
+        if (authors[i].Id === author.Id) {
+            return i;
+        }
+    }
+}
+var getAuthorsByBook = function (id) {
     for (var i = 0; i < books.length; i++) {
         if (books[i].Id == id) {
             return books[i].Author;
@@ -79,7 +130,7 @@ var getAuthorsByBook = function(id) {
     }
 }
 
-var getAuthorById = function(id) {
+var getAuthorById = function (id) {
     for (var i = 0; i < authors.length; i++) {
         if (authors[i].Id == id) {
             return authors[i];
@@ -87,7 +138,16 @@ var getAuthorById = function(id) {
     }
 }
 
-var author = function(id, name, surname, year, country, type) {
+var getBookrById = function (id) {
+    for (var i = 0; i < books.length; i++) {
+        if (books[i].Id == id) {
+            return books[i];
+        }
+    }
+}
+
+
+var author = function (id, name, surname, year, country, type) {
     this.Id = id;
     this.Name = name;
     this.Surname = surname;
@@ -96,7 +156,7 @@ var author = function(id, name, surname, year, country, type) {
     this.Type = type;
 }
 
-var book = function(id, title, authorId, year, price) {
+var book = function (id, title, authorId, year, price) {
     this.Id = id;
     this.Title = title;
     this.Author = getAuthorById(authorId);
