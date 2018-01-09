@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="bookCtrl.js"></script>
 </head>
 
@@ -38,14 +39,14 @@
             <button class="btn btn-success" ng-click="showAddFormBook()">Add new</button>
         </div>
         <p></p>
-        <table class="table">
+        <table class="table table-responsive table-sortable">
             <thead>
                 <tr>
-                    <th>Title</th>
+                    <th>Title<a class="glyphicon glyphicon-sort text-right" ng-click="SortTitle()"></a></th>
                     <th>Author Name</th>
-                    <th>Author Surname</th>
-                    <th>Year</th>
-                    <th>Price</th>
+                    <th>Author Surname</i></th>
+                    <th>Year<a class="glyphicon glyphicon-sort" ng-click="SortYear()"></a></th>
+                    <th>Price<a class="glyphicon glyphicon-sort" ng-click="SortPrice()"></a></i></th>
                     <th></th>
                 </tr>
             </thead>
@@ -92,15 +93,15 @@
                         <button class="btn btn-warning" type="submit" ng-click="submitEditBook(newBook)">OK </button>
                     </td>
                 </tr>
-                <tr ng-repeat="book in books" ng-if="editedBook.Id!=book.Id">
+                <tr ng-repeat="book in books | orderBy : orderBook" ng-if="editedBook.Id!=book.Id">
                     <td>{{book.Title}}</td>
                     <td>{{book.Author.Name}}</td>
                     <td>{{book.Author.Surname}}</td>
                     <td>{{book.Year}}</td>
                     <td>{{book.Price}}</td>
                     <td>
-                        <button ng-show="!addmodeBook" class="btn-warning" ng-click="editBook(book)">Edit</button>
-                        <button ng-show="!editomodeBook && !addmodeBook" class="btn-danger" ng-click="removeBook(book.Id)">Remove</button>
+                        <button ng-show="!addmodeBook" class="btn btn-warning" ng-click="editBook(book)">Edit</button>
+                        <button ng-show="!editomodeBook && !addmodeBook" class="btn btn-danger" ng-click="removeBook(book.Id)">Remove</button>
                     </td>
                 </tr>
             </tbody>
@@ -115,12 +116,12 @@
         </div>
 
         <p></p>
-        <table class="table">
+        <table class="table table-responsive table-sortable">
             <thead>
                 <tr>
-                    <th>Author Name</th>
-                    <th>Author Surname</th>
-                    <th>Year Birth</th>
+                    <th>Author Name<a class="glyphicon glyphicon-sort" ng-click="SortName()"></a></th>
+                    <th>Author Surname<a class="glyphicon glyphicon-sort" ng-click="SortSurname()"></a></th>
+                    <th>Year Birth<a class="glyphicon glyphicon-sort" ng-click="SortBirth()"></a></i></th>
                     <th>Country</th>
                     <th>Type of books</th>
                 </tr>
@@ -167,7 +168,7 @@
                     </td>
 
                 </tr>
-                <tr ng-repeat="author in authors" ng-if="author.Id != editedAuthor.Id">
+                <tr ng-repeat="author in authors |  orderBy : orderAuthor" ng-if="author.Id != editedAuthor.Id">
                     <td>{{author.Name}}</td>
                     <td>{{author.Surname}}</td>
                     <td>{{author.Year}}</td>

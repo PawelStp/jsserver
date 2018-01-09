@@ -45,12 +45,12 @@ app.controller('myBookCtrl', function ($scope, $http) {
                 $scope.cancel();
             });
     }
-    $scope.submitEditBook = function(){
+    $scope.submitEditBook = function () {
         $http.put("http://localhost:8888/book", $scope.editedBook)
-        .then(function (response) {
-            $scope.GetAllBooks();
-            $scope.cancel();
-        });
+            .then(function (response) {
+                $scope.GetAllBooks();
+                $scope.cancel();
+            });
     }
     $scope.addNewAuthor = function (newAuthor) {
         $http.post("http://localhost:8888/author", $scope.newAuthor)
@@ -107,13 +107,66 @@ app.controller('myBookCtrl', function ($scope, $http) {
         $scope.cancel();
         $scope.addmodeAuthor = true;
     }
+
     $scope.showAddFormBook = function () {
         $scope.cancel();
         $scope.newBook = null;
         $scope.addmodeBook = true;
     }
 
+    $scope.SortTitle = function () {
+        if ($scope.orderBook != '+Title') {
+            $scope.orderBook = '+Title';
+        }
+        else {
+            $scope.orderBook = '-Title';
+        }
+    }
 
+    $scope.SortYear = function () {
+        if ($scope.orderBook != '+Year') {
+            $scope.orderBook = '+Year';
+        }
+        else {
+            $scope.orderBook = '-Year';
+        }
+    }
+
+    $scope.SortPrice = function () {
+        if ($scope.orderBook != '+Price') {
+            $scope.orderBook = '+Price';
+        }
+        else {
+            $scope.orderBook = '-Price';
+        }
+    }
+
+    $scope.SortName = function () {
+        if ($scope.orderAuthor != '+Name') {
+            $scope.orderAuthor = '+Name';
+        }
+        else {
+            $scope.orderAuthor = '-Name';
+        }
+    }
+
+    $scope.SortSurname = function () {
+        if ($scope.orderAuthor != '+Surname') {
+            $scope.orderAuthor = '+Surname';
+        }
+        else {
+            $scope.orderAuthor = '-Surname';
+        }
+    }
+
+    $scope.SortBirth = function () {
+        if ($scope.orderAuthor != '+Year') {
+            $scope.orderAuthor = '+Year';
+        }
+        else {
+            $scope.orderAuthor = '-Year';
+        }
+    }
 
     var findAuthorById = function (id) {
         for (var i = 0; i < $scope.authors.length; i++) {
@@ -123,5 +176,7 @@ app.controller('myBookCtrl', function ($scope, $http) {
         }
     }
 
+    $scope.orderBook = null;
+    $scope.orderAuthor = null;
 
 });
