@@ -39,6 +39,10 @@ app.controller('myBookCtrl', function ($scope, $http) {
     }
 
     $scope.submitEditAuthor = function () {
+        if ($scope.editedAuthor == null || $scope.editedAuthor.Name === "" || $scope.editedAuthor.Surname === "" || $scope.editedAuthor.Type === "" || $scope.editedAuthor.Year === "") {
+            $scope.AuthorNotValid = true;
+            return;
+        }
         $http.put("http://localhost:8888/author", $scope.editedAuthor)
             .then(function (response) {
                 $scope.GetAllAuthors();
@@ -46,6 +50,10 @@ app.controller('myBookCtrl', function ($scope, $http) {
             });
     }
     $scope.submitEditBook = function () {
+        if ($scope.editedBook == null || $scope.editedBook.Author === "" || $scope.editedBook.Year === "" || $scope.editedBook.Price === "") {
+            $scope.BookNotValid = true;
+            return;
+        }
         $http.put("http://localhost:8888/book", $scope.editedBook)
             .then(function (response) {
                 $scope.GetAllBooks();
@@ -53,6 +61,10 @@ app.controller('myBookCtrl', function ($scope, $http) {
             });
     }
     $scope.addNewAuthor = function (newAuthor) {
+        if (newAuthor == null || newAuthor.Name == null || newAuthor.Surname == null || newAuthor.Type == null || newAuthor.Year == null) {
+            $scope.AuthorNotValid = true;
+            return;
+        }
         $http.post("http://localhost:8888/author", $scope.newAuthor)
             .then(function (response) {
                 $scope.GetAllAuthors();
@@ -61,6 +73,10 @@ app.controller('myBookCtrl', function ($scope, $http) {
     }
 
     $scope.addNewBook = function (newBook) {
+        if (newBook == null || newBook.Author == null || newBook.Year == null || newBook.Price == null) {
+            $scope.BookNotValid = true;
+            return;
+        }
         $http.post("http://localhost:8888/book", newBook)
             .then(function (response) {
                 $scope.GetAllBooks();
@@ -101,6 +117,8 @@ app.controller('myBookCtrl', function ($scope, $http) {
         $scope.newBook = null;
         $scope.editomodeBook = false;
         $scope.editedBook = 0;
+        $scope.BookNotValid = false;
+        $scope.AuthorNotValid = false;
     }
 
     $scope.showAddFormAuthor = function () {
@@ -141,6 +159,24 @@ app.controller('myBookCtrl', function ($scope, $http) {
         }
     }
 
+    $scope.SortAuthorName = function () {
+        if ($scope.orderBook != '+Author.Name') {
+            $scope.orderBook = '+Author.Name';
+        }
+        else {
+            $scope.orderBook = '-Author.Name';
+        }
+    }
+
+    $scope.SortAuthorSurname = function () {
+        if ($scope.orderBook != '+Author.Surname') {
+            $scope.orderBook = '+Author.Surname';
+        }
+        else {
+            $scope.orderBook = '-Author.Surname';
+        }
+    }
+
     $scope.SortName = function () {
         if ($scope.orderAuthor != '+Name') {
             $scope.orderAuthor = '+Name';
@@ -166,6 +202,25 @@ app.controller('myBookCtrl', function ($scope, $http) {
         else {
             $scope.orderAuthor = '-Year';
         }
+    }
+
+    $scope.SortCountry = function () {
+        if ($scope.orderAuthor != '+Country') {
+            $scope.orderAuthor = '+Country';
+        }
+        else {
+            $scope.orderAuthor = '-Country';
+        }
+    }
+
+    $scope.SortType = function () {
+        if ($scope.orderAuthor != '+Type') {
+            $scope.orderAuthor = '+Type';
+        }
+        else {
+            $scope.orderAuthor = '-Type';
+        }
+
     }
 
     var findAuthorById = function (id) {

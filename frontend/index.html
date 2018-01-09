@@ -18,14 +18,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="bookCtrl.js"></script>
+    <style>
+        .yellow {
+            color: yellow;
+        }
+    </style>
 </head>
 
 <body ng-app="myBook" ng-controller="myBookCtrl">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button class="btn btn-success" ng-click="ClickAuthors()">Authors</button>
-                <button class="btn btn-success" ng-click="ClickBooks()">Books</button>
+                <button class="btn btn-primary" ng-click="ClickAuthors()">Authors</button>
+                <button class="btn btn-primary" ng-click="ClickBooks()">Books</button>
             </div>
         </div>
     </div>
@@ -33,21 +38,37 @@
     <br/>
     <!-- Books -->
     <div class="container" ng-init="Books=1" ng-show="Books">
-        <div class="text-center">
+        <div class="text-left">
 
-            <h1>Books</h1>
-            <button class="btn btn-success" ng-click="showAddFormBook()">Add new</button>
+            <h1 clas>Books</h1>
+            <button class="btn btn-primary" ng-click="showAddFormBook()">ADD</button>
+            <div class="alert alert-danger" ng-show="BookNotValid">
+                <strong>Warning!</strong> The Form is not valid
+            </div>
+
         </div>
         <p></p>
         <table class="table table-responsive table-sortable">
             <thead>
-                <tr>
-                    <th>Title<a class="glyphicon glyphicon-sort text-right" ng-click="SortTitle()"></a></th>
-                    <th>Author Name</th>
-                    <th>Author Surname</i></th>
-                    <th>Year<a class="glyphicon glyphicon-sort" ng-click="SortYear()"></a></th>
-                    <th>Price<a class="glyphicon glyphicon-sort" ng-click="SortPrice()"></a></i></th>
-                    <th></th>
+                <tr class="bg-primary">
+                    <th class="col-md-2">Title
+                        <a class="glyphicon glyphicon-sort yellow " ng-click="SortTitle()"></a>
+                    </th>
+                    <th class="col-md-2">Author Name
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortAuthorName()"></a>
+                    </th>
+                    <th class="col-md-2">Author Surname
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortAuthorSurname()"></a>
+                        </i>
+                    </th>
+                    <th class="col-md-2">Year
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortYear()"></a>
+                    </th>
+                    <th class="col-md-2">Price
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortPrice()"></a>
+                        </i>
+                    </th>
+                    <th class="col-md-2" scope="row"></th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +90,7 @@
                         <input class="form-control" ng-model="newBook.Price"> </input>
                     </td>
                     <td>
+                        <button class="btn btn-danger" type="submit" ng-click="cancel()">Cancel </button>
                         <button class="btn btn-success" type="submit" ng-click="addNewBook(newBook)">OK </button>
                     </td>
                 </tr>
@@ -77,7 +99,7 @@
                         <input class="form-control" ng-model="editedBook.Title"> </input>
                     </td>
                     <td>
-                        <input class="form-control" ng-model="editedBook.Author.Name" ></input>
+                        <input class="form-control" ng-model="editedBook.Author.Name"></input>
                     </td>
                     <td>
                         <select class="form-control" ng-model="editedBook.Author" ng-options="x.Surname for x in authors">
@@ -109,21 +131,36 @@
     </div>
     <!-- Autorzy -->
     <div class="container" ng-init="Authors=0" ng-show="Authors">
-        <div class="text-center">
+        <div class="text-left">
 
             <h1>Authors</h1>
-            <button class="btn btn-success" ng-click="showAddFormAuthor()">Add new</button>
+            <button class="btn btn-primary" ng-click="showAddFormAuthor()">ADD</button>
         </div>
 
-        <p></p>
-        <table class="table table-responsive table-sortable">
-            <thead>
+        <div class="alert alert-danger" ng-show="AuthorNotValid">
+                <strong>Warning!</strong> The Form is not valid
+            </div>
+
+        <table class="table table-striped ">
+            <thead class="bg-primary">
                 <tr>
-                    <th>Author Name<a class="glyphicon glyphicon-sort" ng-click="SortName()"></a></th>
-                    <th>Author Surname<a class="glyphicon glyphicon-sort" ng-click="SortSurname()"></a></th>
-                    <th>Year Birth<a class="glyphicon glyphicon-sort" ng-click="SortBirth()"></a></i></th>
-                    <th>Country</th>
-                    <th>Type of books</th>
+                    <th class="col-md-2">Author Name
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortName()"></a>
+                    </th>
+                    <th class="col-md-2">Author Surname
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortSurname()"></a>
+                    </th>
+                    <th class="col-md-2">Year Birth
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortBirth()"></a>
+                        </i>
+                    </th>
+                    <th class="col-md-1">Country
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortCountry()"></a>
+                    </th>
+                    <th class="col-md-2">Type of books
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortType()"></a>
+                    </th>
+                    <th class="col-md-6"></th>
                 </tr>
             </thead>
             <tbody>
@@ -144,6 +181,7 @@
                         <input class="form-control" ng-model="newAuthor.Type"> </input>
                     </td>
                     <td>
+                        <button class="btn btn-danger" type="submit" ng-click="cancel()">Cancel </button>
                         <button class="btn btn-success" type="submit" ng-click="addNewAuthor(newAuthor)">OK </button>
                     </td>
                 </tr>
