@@ -41,7 +41,10 @@
         <div class="text-left">
 
             <h1 clas>Books</h1>
-            <button class="btn btn-primary" ng-click="showAddFormBook()">ADD</button>
+            <div class="row">
+                <button class="btn btn-primary" ng-click="showAddFormBook()">ADD</button>
+                <input align="right"  ng-model="searchText"></button>
+            </div>
             <div class="alert alert-danger" ng-show="BookNotValid">
                 <strong>Warning!</strong> The Form is not valid
             </div>
@@ -115,7 +118,7 @@
                         <button class="btn btn-warning" type="submit" ng-click="submitEditBook(newBook)">OK </button>
                     </td>
                 </tr>
-                <tr ng-repeat="book in books | orderBy : orderBook" ng-if="editedBook.Id!=book.Id">
+                <tr ng-repeat="book in books | orderBy : orderBook | filter:searchText" ng-if="editedBook.Id!=book.Id">
                     <td>{{book.Title}}</td>
                     <td>{{book.Author.Name}}</td>
                     <td>{{book.Author.Surname}}</td>
@@ -136,11 +139,10 @@
             <h1>Authors</h1>
             <button class="btn btn-primary" ng-click="showAddFormAuthor()">ADD</button>
         </div>
-
         <div class="alert alert-danger" ng-show="AuthorNotValid">
-                <strong>Warning!</strong> The Form is not valid
-            </div>
-
+            <strong>Warning!</strong> The Form is not valid
+        </div>
+        <p></p>
         <table class="table table-striped ">
             <thead class="bg-primary">
                 <tr>

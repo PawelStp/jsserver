@@ -112,11 +112,11 @@ app.controller('myBookCtrl', function ($scope, $http) {
     $scope.cancel = function () {
         $scope.addmodeAuthor = false;
         $scope.editmodeAuthor = false;
-        $scope.editedAuthor = 0;
+        $scope.editedAuthor = null;
         $scope.addmodeBook = false;
         $scope.newBook = null;
         $scope.editomodeBook = false;
-        $scope.editedBook = 0;
+        $scope.editedBook = null;
         $scope.BookNotValid = false;
         $scope.AuthorNotValid = false;
     }
