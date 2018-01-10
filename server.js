@@ -158,22 +158,27 @@ var author = function (id, name, surname, year, country, type) {
     this.Type = type;
 }
 
-var book = function (id, title, authorId, year, price) {
+var book = function (id, title, authorId, year, price, category) {
     this.Id = id;
     this.Title = title;
     this.Author = getAuthorById(authorId);
     this.Year = year;
     this.Price = price;
+    this.Category = category;
 }
 
 var authors = [];
 var books = [];
 
 authors.push(new author(1, "Pawel", "Stypulkowski", 1996, "Pl", "Historyczne"));
-authors.push(new author(2, "KAcper", "Swislocki", 199, "Pl", "SF"));
+authors.push(new author(2, "KAcper", "Swislocki", 1990, "Pl", "SF"));
 authors.push(new author(3, "Kamil", "Oleksy", 1998, "Pl", "Sportowe"));
+authors.push(new author(4, "Marcin", "Tyborowski", 1999, "ENG", "Romans"));
 
-books.push(new book(1, "Krzyzaki", 1, 1990, 25));
-books.push(new book(2, "Harry potter", 2, 1995, 45));
-books.push(new book(3, "Gwiezde wojny", 2, 1999, 55));
-books.push(new book(4, "Lewandowski", 3, 1999, 55));
+books.push(new book(1, "Krzyzaki", 1, 1990, 25, "Historyczne"));
+books.push(new book(2, "Harry potter", 2, 1995, 45, "Science"));
+books.push(new book(3, "Gwiezde wojny", 2, 1999, 55, "Science"));
+books.push(new book(4, "Lewandowski", 3, 1993,60, "Sportowe"));
+books.push(new book(5, "Miłosc w krakowie", 4, 1999, 55, "Romans"));
+books.push(new book(6, "Lovestory", 4, 1994, 15, "Romans angielski"));
+books.push(new book(7, "LoveLove", 4, 1998, 20, "Romans polski"));

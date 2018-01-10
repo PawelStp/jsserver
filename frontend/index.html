@@ -41,17 +41,19 @@
         <div class="text-left">
 
             <h1 clas>Books</h1>
-            <div class="row">
+            <div>
                 <button class="btn btn-primary" ng-click="showAddFormBook()">ADD</button>
-                <input align="right"  ng-model="searchText"></button>
+                <input style="float:right;" ng-model="searchText" placeholder="Title, Author, Year, Price...">
+                </button>
             </div>
+
             <div class="alert alert-danger" ng-show="BookNotValid">
                 <strong>Warning!</strong> The Form is not valid
             </div>
 
         </div>
         <p></p>
-        <table class="table table-responsive table-sortable">
+        <table class="table table-striped">
             <thead>
                 <tr class="bg-primary">
                     <th class="col-md-2">Title
@@ -64,12 +66,14 @@
                         <a class="glyphicon glyphicon-sort yellow" ng-click="SortAuthorSurname()"></a>
                         </i>
                     </th>
-                    <th class="col-md-2">Year
+                    <th class="col-md-1">Year
                         <a class="glyphicon glyphicon-sort yellow" ng-click="SortYear()"></a>
                     </th>
-                    <th class="col-md-2">Price
+                    <th class="col-md-1">Price
                         <a class="glyphicon glyphicon-sort yellow" ng-click="SortPrice()"></a>
-                        </i>
+                    </th>
+                    <th class="col-md-2">Category
+                        <a class="glyphicon glyphicon-sort yellow" ng-click="SortCategory()"></a>
                     </th>
                     <th class="col-md-2" scope="row"></th>
                 </tr>
@@ -93,6 +97,9 @@
                         <input class="form-control" ng-model="newBook.Price"> </input>
                     </td>
                     <td>
+                        <input class="form-control" ng-model="newBook.Category"> </input>
+                    </td>
+                    <td>
                         <button class="btn btn-danger" type="submit" ng-click="cancel()">Cancel </button>
                         <button class="btn btn-success" type="submit" ng-click="addNewBook(newBook)">OK </button>
                     </td>
@@ -105,7 +112,7 @@
                         <input class="form-control" ng-model="editedBook.Author.Name"></input>
                     </td>
                     <td>
-                        <select class="form-control" ng-model="editedBook.Author" ng-options="x.Surname for x in authors">
+                        <select  class="form-control" ng-model="editedBook.Author" ng-options="x.Surname for x in authors">
                         </select>
                     </td>
                     <td>
@@ -115,7 +122,10 @@
                         <input class="form-control" ng-model="editedBook.Price"> </input>
                     </td>
                     <td>
-                        <button class="btn btn-warning" type="submit" ng-click="submitEditBook(newBook)">OK </button>
+                        <input class="form-control" ng-model="editedBook.Category"> </input>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" type="submit" ng-click="submitEditBook(editedBook)">OK </button>
                     </td>
                 </tr>
                 <tr ng-repeat="book in books | orderBy : orderBook | filter:searchText" ng-if="editedBook.Id!=book.Id">
@@ -124,6 +134,7 @@
                     <td>{{book.Author.Surname}}</td>
                     <td>{{book.Year}}</td>
                     <td>{{book.Price}}</td>
+                    <td>{{book.Category}}</td>
                     <td>
                         <button ng-show="!addmodeBook" class="btn btn-warning" ng-click="editBook(book)">Edit</button>
                         <button ng-show="!editomodeBook && !addmodeBook" class="btn btn-danger" ng-click="removeBook(book.Id)">Remove</button>
@@ -138,6 +149,8 @@
 
             <h1>Authors</h1>
             <button class="btn btn-primary" ng-click="showAddFormAuthor()">ADD</button>
+            <input align="right" ng-model="searchText" placeholder="Name, Surname, Year..." style="float:right;">
+            </button>
         </div>
         <div class="alert alert-danger" ng-show="AuthorNotValid">
             <strong>Warning!</strong> The Form is not valid
@@ -204,11 +217,11 @@
                         <input class="form-control" ng-model="editedAuthor.Type"> </input>
                     </td>
                     <td>
-                        <button class="btn btn-success" type="submit" ng-click="submitEditAuthor()">OK </button>
+                        <button class="btn btn-success" type="submit" ng-click="submitEditAuthor(editedAuthor)">OK </button>
                     </td>
 
                 </tr>
-                <tr ng-repeat="author in authors |  orderBy : orderAuthor" ng-if="author.Id != editedAuthor.Id">
+                <tr ng-repeat="author in authors |  orderBy : orderAuthor | filter:searchText" ng-if="author.Id != editedAuthor.Id">
                     <td>{{author.Name}}</td>
                     <td>{{author.Surname}}</td>
                     <td>{{author.Year}}</td>

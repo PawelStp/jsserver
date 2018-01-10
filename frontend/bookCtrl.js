@@ -38,8 +38,12 @@ app.controller('myBookCtrl', function ($scope, $http) {
             });
     }
 
-    $scope.submitEditAuthor = function () {
-        if ($scope.editedAuthor == null || $scope.editedAuthor.Name === "" || $scope.editedAuthor.Surname === "" || $scope.editedAuthor.Type === "" || $scope.editedAuthor.Year === "") {
+    $scope.submitEditAuthor = function (editedAuthor) {
+        if (editedAuthor = null || !isNullOrEmpty(editedAuthor.Name) || !isNullOrEmpty(editedAuthor.Surname) || !isNullOrEmpty(editedAuthor.Type)) {
+            $scope.AuthorNotValid = true;
+            return;
+        }
+        if (!isInt(editedAuthor.Year)) {
             $scope.AuthorNotValid = true;
             return;
         }
@@ -49,8 +53,12 @@ app.controller('myBookCtrl', function ($scope, $http) {
                 $scope.cancel();
             });
     }
-    $scope.submitEditBook = function () {
-        if ($scope.editedBook == null || $scope.editedBook.Author === "" || $scope.editedBook.Year === "" || $scope.editedBook.Price === "") {
+    $scope.submitEditBook = function (editedBook) {
+        if (editedBook == null || editedBook.Author == null || !isNullOrEmpty(editedBook.Category)) {
+            $scope.BookNotValid = true;
+            return;
+        }
+        if (!isInt(editedBook.Year) || !isInt(editedBook.Price)) {
             $scope.BookNotValid = true;
             return;
         }
@@ -61,7 +69,11 @@ app.controller('myBookCtrl', function ($scope, $http) {
             });
     }
     $scope.addNewAuthor = function (newAuthor) {
-        if (newAuthor == null || newAuthor.Name == null || newAuthor.Surname == null || newAuthor.Type == null || newAuthor.Year == null) {
+        if (newAuthor = null || !isNullOrEmpty(newAuthor.Name) || !isNullOrEmpty(newAuthor.Surname) || !isNullOrEmpty(newAuthor.Type)) {
+            $scope.AuthorNotValid = true;
+            return;
+        }
+        if (!isInt(newAuthor.Year)) {
             $scope.AuthorNotValid = true;
             return;
         }
@@ -73,7 +85,11 @@ app.controller('myBookCtrl', function ($scope, $http) {
     }
 
     $scope.addNewBook = function (newBook) {
-        if (newBook == null || newBook.Author == null || newBook.Year == null || newBook.Price == null) {
+        if (newBook == null || newBook.Author == null || !isNullOrEmpty(newBook.Category)) {
+            $scope.BookNotValid = true;
+            return;
+        }
+        if (!isInt(newBook.Year) || !isInt(newBook.Price)) {
             $scope.BookNotValid = true;
             return;
         }
@@ -177,6 +193,15 @@ app.controller('myBookCtrl', function ($scope, $http) {
         }
     }
 
+    $scope.SortCategory = function () {
+        if ($scope.orderBook != '+Category') {
+            $scope.orderBook = '+Category';
+        }
+        else {
+            $scope.orderBook = '-Category';
+        }
+    }
+
     $scope.SortName = function () {
         if ($scope.orderAuthor != '+Name') {
             $scope.orderAuthor = '+Name';
@@ -231,6 +256,18 @@ app.controller('myBookCtrl', function ($scope, $http) {
         }
     }
 
+    var isInt = function (value) {
+        return !isNaN(value) &&
+            parseInt(Number(value)) == value &&
+            !isNaN(parseInt(value, 10));
+    }
+
+    var isNullOrEmpty = function (value) {
+        if (value !== null && value !== '') {
+            return true;
+        }
+        return false;
+    }
     $scope.orderBook = null;
     $scope.orderAuthor = null;
 
